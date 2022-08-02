@@ -12,7 +12,7 @@ class SessionService {
     return resp;
   }
 
-  async verifyOtp(phone_number, otp, device_id, user_agent) {
+  async verifyOtp(phone_number, otp, device_id, user_agent, is_active = true) {
     const isOtpVerified = await this.dao.verifyOtp(phone_number, otp);
 
     console.log({ isOtpVerified });

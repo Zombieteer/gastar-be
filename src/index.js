@@ -1,4 +1,4 @@
-require('dotenv').config()
+require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
@@ -6,7 +6,7 @@ const errors = require("./errors");
 const middlewares = require("./middlewares");
 const router = require("./router");
 const db = require("./utils/db");
-const services = require('./services');
+const services = require("./services");
 
 middlewares.wrapExpressMiddleWare();
 
@@ -25,7 +25,7 @@ const startServer = async () => {
   app.use(cookieParser());
   app.use(middlewares.logger(false));
   app.get("/ping", async (_req, res) => res.end("pong"));
-  //   app.use(middlewares.attachUserToRequest(iocContainer));
+  app.use(middlewares.attachUserToRequest(iocContainer));
   app.use(router(iocContainer));
   app.use(middlewares.errorHandler("MAIN_SERVER"));
 

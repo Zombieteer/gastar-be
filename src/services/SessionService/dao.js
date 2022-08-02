@@ -27,7 +27,7 @@ module.exports = (db) => {
         select
           u.user_id,
           u.full_name,
-          u.phone,
+          u.phone_number,
           u.email,
           u.is_active,
           u.subs_type,
@@ -150,7 +150,7 @@ module.exports = (db) => {
       update sessions set logged_out_at = now()
       where id = $1 and logged_out_at is null
     `,
-      session_id
+      [session_id]
     );
 
   const logoutAllSessionsByUserId = (user_id) =>

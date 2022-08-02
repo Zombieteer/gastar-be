@@ -1,21 +1,23 @@
 create table subscriptions (
-    id bigserial primary key,
     type text not null
 );
 
-insert into subscriptions (type) values('Basic', 'Plus', 'Pro');
+create unique index idx_unique_subs_type on subscriptions(type);
+
+insert into subscriptions (type) values('Basic'), ('Plus'), ('Pro');
 
 create table users (
     user_id bigserial primary key,
-    full_name text not null,
-    is_active boolean default false,
+    full_name text,
+    is_active boolean default true,
     phone_number text not null,
     email text,
     created_at timestamp with time zone default now(),
-    subs_type text default null
+    subs_type text REFERENCES subscriptions (type) DEFAULT 'Basic'
 );
 
 create index idx_users_phone_number_is_active on users(phone_number, is_active);
+create unique index idx_unique_users_phone_number on users(phone_number);
 
 create table phone_number_otp (
   id bigserial primary key,
