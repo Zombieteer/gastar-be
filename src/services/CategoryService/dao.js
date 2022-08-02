@@ -11,24 +11,24 @@ module.exports = (db) => {
       [user_id]
     );
 
-  const getUserCategory = async (user_id, title) =>
+  const getUserCategory = async (user_id, type, title) =>
     db.any(
-      `select * from user_categories where user_id = $1::bigint and title ilike $2`,
-      [user_id, title]
+      `select * from user_categories where user_id = $1::bigint and type = $2 and title ilike $3`,
+      [user_id, type, title]
     );
 
-  const addUserCategory = async (user_id, title, color, avatar) =>
+  const addUserCategory = async (user_id, type, title, color, avatar) =>
     db.any(
-      `insert into user_categories (user_id, title, color, avatar, created_at)
-      values ($1::bigint, $2, $3, $4, now()) returning *`,
-      [user_id, title, color, avatar]
+      `insert into user_categories (user_id, type, title, color, avatar, created_at)
+      values ($1::bigint, $2, $3, $4, $5, now()) returning *`,
+      [user_id, type, title, color, avatar]
     );
 
-  const updateCategory = async (id, title, color, avatar) =>
+  const updateCategory = async (id, type, title, color, avatar) =>
     db.any(
-      `update user_categories set title = $1, color = $2, avatar = $3, is_active = true
-      where id = $4 returning *`,
-      [title, color, avatar, id]
+      `update user_categories set type = $1, title = $2, color = $3, avatar = $4, is_active = true
+      where id = $5 returning *`,
+      [type, title, color, avatar, id]
     );
 
   const deleteCategory = (id) =>

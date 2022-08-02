@@ -9,8 +9,8 @@ class CategoryService {
     return categories || [];
   }
 
-  async addCategory(user_id, title, color, avatar) {
-    const resp = await this.dao.getUserCategory(user_id, title);
+  async addCategory(user_id, type, title, color, avatar) {
+    const resp = await this.dao.getUserCategory(user_id, type, title);
 
     if (resp.length) {
       throw new Error("CATEGORY_ALREADY_EXISTS");
@@ -21,6 +21,7 @@ class CategoryService {
     if (!inactivCat) {
       const category = await this.dao.addUserCategory(
         user_id,
+        type,
         title,
         color,
         avatar
@@ -30,6 +31,7 @@ class CategoryService {
 
     const category = await this.dao.updateCategory(
       inactivCat.id,
+      type,
       title,
       color,
       avatar
@@ -37,14 +39,20 @@ class CategoryService {
     return category;
   }
 
-  async updateCategory(id, user_id, title, color, avatar) {
-    const resp = await this.dao.getUserCategory(user_id, title);
+  async updateCategory(id, type, user_id, title, color, avatar) {
+    const resp = await this.dao.getUserCategory(user_id, type, title);
 
     if (resp.length) {
       throw new Error("CATEGORY_ALREADY_EXISTS");
     }
 
-    const category = await this.dao.updateCategory(id, title, color, avatar);
+    const category = await this.dao.updateCategory(
+      id,
+      type,
+      title,
+      color,
+      avatar
+    );
     return category;
   }
 

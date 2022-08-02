@@ -4,8 +4,6 @@ create table subscriptions (
 
 create unique index idx_unique_subs_type on subscriptions(type);
 
-insert into subscriptions (type) values('Basic'), ('Plus'), ('Pro');
-
 create table users (
     user_id bigserial primary key,
     full_name text,
@@ -61,15 +59,22 @@ create table category_avatar(
 );
 create unique index idx_avatar_category_avatar on category_avatar(avatar);
 
+create table category_type(
+  id bigserial primary key,
+  type text
+);
+create unique index idx_type_category_type on category_type(type);
+
 create table user_categories(
   id bigserial primary key,
+  type text REFERENCES category_type(type),
   user_id bigint REFERENCES users(user_id),
   title text not null,
   color text REFERENCES colors(color),
-  avatar text REFERENCES category_avatar(avatar)
+  avatar text REFERENCES category_avatar(avatar),
   is_active boolean default true,
   created_at timestamp with time zone default now()
 );
 create index idx_user_id_is_active_user_categories on user_categories(user_id, is_active);
-create index idx_user_id_title_user_categories on user_categories(user_id, title);
-create unique index idx_unique_user_id_title_user_categories on user_categories(user_id, title);
+create index idx_user_id_type_title_user_categories on user_categories(user_id, type, title);
+create unique index idx_unique_user_id_type_title_user_categories on user_categories(user_id, type, title);

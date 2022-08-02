@@ -13,6 +13,9 @@ const validateAddCategory = v.compile({
   avatar: {
     type: "string",
   },
+  type: {
+    type: "string",
+  },
   $$strict: true,
 });
 
@@ -28,6 +31,9 @@ const validateUpdateCategory = v.compile({
     type: "string",
   },
   avatar: {
+    type: "string",
+  },
+  type: {
     type: "string",
   },
   $$strict: true,
