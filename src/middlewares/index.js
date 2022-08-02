@@ -1,5 +1,4 @@
 const errorHandler = require('./errorHandler');
-const validationMw = require('./validationMw');
 const attachUserToRequest = require('./attachUserToRequest');
 const requiresUser = require('./requiresUser');
 const wrapExpressMiddleWare = require('./wrapExpressMiddleWare');
@@ -8,7 +7,6 @@ const config = require('config');
 
 module.exports = {
   errorHandler,
-  validationMw,
   attachUserToRequest,
   requiresUser,
   wrapExpressMiddleWare,

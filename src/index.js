@@ -6,6 +6,7 @@ const errors = require("./errors");
 const middlewares = require("./middlewares");
 const router = require("./router");
 const db = require("./utils/db");
+const services = require('./services');
 
 middlewares.wrapExpressMiddleWare();
 
@@ -16,6 +17,7 @@ const startServer = async () => {
     errors,
     middlewares,
     router,
+    services,
   };
 
   app.use(express.json({ limit: "50mb" }));
