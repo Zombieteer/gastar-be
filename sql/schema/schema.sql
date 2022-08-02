@@ -48,3 +48,28 @@ create table sessions (
 create view active_sessions as select
 * from sessions
 where logged_out_at is null and expires_at > now();
+
+create table colors(
+  id bigserial primary key,
+  color text
+);
+create unique index idx_color_colors on colors(color);
+
+create table category_avatar(
+  id bigserial primary key,
+  avatar text
+);
+create unique index idx_avatar_category_avatar on category_avatar(avatar);
+
+create table user_categories(
+  id bigserial primary key,
+  user_id bigint REFERENCES users(user_id),
+  title text not null,
+  color text REFERENCES colors(color),
+  avatar text REFERENCES category_avatar(avatar)
+  is_active boolean default true,
+  created_at timestamp with time zone default now()
+);
+create index idx_user_id_is_active_user_categories on user_categories(user_id, is_active);
+create index idx_user_id_title_user_categories on user_categories(user_id, title);
+create unique index idx_unique_user_id_title_user_categories on user_categories(user_id, title);
