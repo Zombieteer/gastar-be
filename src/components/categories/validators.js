@@ -10,7 +10,7 @@ const validateAddCategory = v.compile({
   color: {
     type: "string",
   },
-  avatar: {
+  avatar_name: {
     type: "string",
   },
   type: {
@@ -30,7 +30,7 @@ const validateUpdateCategory = v.compile({
   color: {
     type: "string",
   },
-  avatar: {
+  avatar_name: {
     type: "string",
   },
   type: {

@@ -55,9 +55,9 @@ create unique index idx_color_colors on colors(color);
 
 create table category_avatar(
   id bigserial primary key,
-  avatar text
+  avatar_name text
 );
-create unique index idx_avatar_category_avatar on category_avatar(avatar);
+create unique index idx_avatar_category_avatar on category_avatar(avatar_name);
 
 create table category_type(
   id bigserial primary key,
@@ -71,10 +71,38 @@ create table user_categories(
   user_id bigint REFERENCES users(user_id),
   title text not null,
   color text REFERENCES colors(color),
-  avatar text REFERENCES category_avatar(avatar),
+  avatar_name text REFERENCES category_avatar(avatar_name),
   is_active boolean default true,
   created_at timestamp with time zone default now()
 );
 create index idx_user_id_is_active_user_categories on user_categories(user_id, is_active);
 create index idx_user_id_type_title_user_categories on user_categories(user_id, type, title);
 create unique index idx_unique_user_id_type_title_user_categories on user_categories(user_id, type, title);
+
+create table recurrences(
+  id bigserial primary key,
+  name text
+);
+create unique index idx_unique_schedule_name on recurrences(name);
+
+create table user_transactions (
+  id bigserial primary key,
+  user_id bigint REFERENCES users(user_id) not null,
+  transaction_type bigint REFERENCES user_categories(id) not null,
+  transaction_date date not null,
+  note text,
+  is_recurring boolean default false,
+  recurrence text REFERENCES recurrences(name),
+  created_at timestamp with time zone default now(),
+  updated_at timestamp with time zone
+);
+
+create table recurring_jobs (
+  id bigserial primary key,
+  transaction_id bigint REFERENCES user_transactions(id),
+  run_on date not null,
+  status text default 'PENDING',
+  created_at timestamp with time zone default now(),
+  success_at timestamp with time zone,
+  failed_at timestamp with time zone
+);

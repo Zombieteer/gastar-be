@@ -9,7 +9,7 @@ class CategoryService {
     return categories || [];
   }
 
-  async addCategory(user_id, type, title, color, avatar) {
+  async addCategory(user_id, type, title, color, avatar_name) {
     const resp = await this.dao.getUserCategory(user_id, type, title);
 
     if (resp.length) {
@@ -24,7 +24,7 @@ class CategoryService {
         type,
         title,
         color,
-        avatar
+        avatar_name
       );
       return category;
     }
@@ -34,12 +34,12 @@ class CategoryService {
       type,
       title,
       color,
-      avatar
+      avatar_name
     );
     return category;
   }
 
-  async updateCategory(id, type, user_id, title, color, avatar) {
+  async updateCategory(id, type, user_id, title, color, avatar_name) {
     const resp = await this.dao.getUserCategory(user_id, type, title);
 
     if (resp.length) {
@@ -51,7 +51,7 @@ class CategoryService {
       type,
       title,
       color,
-      avatar
+      avatar_name
     );
     return category;
   }

@@ -17,18 +17,18 @@ module.exports = (db) => {
       [user_id, type, title]
     );
 
-  const addUserCategory = async (user_id, type, title, color, avatar) =>
+  const addUserCategory = async (user_id, type, title, color, avatar_name) =>
     db.any(
-      `insert into user_categories (user_id, type, title, color, avatar, created_at)
+      `insert into user_categories (user_id, type, title, color, avatar_name, created_at)
       values ($1::bigint, $2, $3, $4, $5, now()) returning *`,
-      [user_id, type, title, color, avatar]
+      [user_id, type, title, color, avatar_name]
     );
 
-  const updateCategory = async (id, type, title, color, avatar) =>
+  const updateCategory = async (id, type, title, color, avatar_name) =>
     db.any(
-      `update user_categories set type = $1, title = $2, color = $3, avatar = $4, is_active = true
+      `update user_categories set type = $1, title = $2, color = $3, avatar_name = $4, is_active = true
       where id = $5 returning *`,
-      [type, title, color, avatar, id]
+      [type, title, color, avatar_name, id]
     );
 
   const deleteCategory = (id) =>

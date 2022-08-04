@@ -32,14 +32,14 @@ module.exports = (iocContainer) => {
       }
 
       try {
-        const { type, title, color, avatar } = req.body;
+        const { type, title, color, avatar_name } = req.body;
         const { user_id } = req.user;
         const resp = await categoryService.addCategory(
           user_id,
           type,
           title,
           color,
-          avatar
+          avatar_name
         );
         res.json(resp);
       } catch (e) {
@@ -67,7 +67,7 @@ module.exports = (iocContainer) => {
       }
 
       try {
-        const { id, type, title, color, avatar } = req.body;
+        const { id, type, title, color, avatar_name } = req.body;
         const { user_id } = req.user;
         const resp = await categoryService.updateCategory(
           id,
@@ -75,7 +75,7 @@ module.exports = (iocContainer) => {
           user_id,
           title,
           color,
-          avatar
+          avatar_name
         );
         res.json(resp);
       } catch (e) {
